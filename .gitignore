@@ -17,3 +17,15 @@ sysinfo.txt
 
 # WebStorm
 /.idea
+
+Assets/Advertisements.meta
+
+Assets/Advertisements/
+
+Assets/Editor/
+
+Assets/Editor.meta
+
+Assets/Plugins.meta
+
+Assets/Plugins/
