@@ -11,8 +11,8 @@ PlayerSettings:
   targetIOSGraphics: -1
   targetResolution: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: unity-ads-demo
+  companyName: Unity Technologies
+  productName: SpaceAds
   cloudProjectId: 
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -74,7 +74,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleIdentifier: com.Company.ProductName
+  bundleIdentifier: com.everyplay.spaceads
   bundleVersion: 1.0
   preloadedAssets: []
   metroEnableIndependentInputSource: 0
@@ -131,7 +131,11 @@ PlayerSettings:
     height: 180
     banner: {fileID: 0}
   resolutionDialogBanner: {fileID: 0}
-  m_BuildTargetIcons: []
+  m_BuildTargetIcons:
+  - m_BuildTarget: 
+    m_Icons:
+    - m_Icon: {fileID: 0}
+      m_Size: 128
   m_BuildTargetBatching: []
   webPlayerTemplate: APPLICATION:Default
   m_TemplateCustomTags: {}
@@ -373,7 +377,7 @@ PlayerSettings:
   WebGL::exceptionSupport: 0
   WebGL::memorySize: 256
   iOS::Architecture: 2
-  iOS::ScriptingBackend: 0
+  iOS::ScriptingBackend: 1
   boolPropertyNames:
   - WebGL::dataCaching
   WebGL::dataCaching: 0
