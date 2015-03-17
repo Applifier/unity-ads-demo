@@ -9,6 +9,15 @@
 	* Scripting Backend: IL2CPP
 	* Architecture: Universal
 
+## Getting Started
+
+After downloading the project and importing the Unity Ads and Everyplay asset packages: 
+
+1. Open the scene named _StartMenu_ located under _SpaceAds_ in the **Project** window
+2. Press the **Play** button run the game in Editor.
+
+**Note:** Ads shown in Editor are only placeholders, and Everyplay is only functional when running on device.
+
 ## How It Works
 
 The SpaceAds demo provides a practical example for how to implement and use both Unity Ads and Everyplay services in your game.
