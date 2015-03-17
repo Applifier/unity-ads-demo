@@ -2,10 +2,12 @@
 
 ## Prerequisites
 
-Download and import the latest Unity Ads and Everyplay asset packages:
-
-* [Unity Ads](https://www.assetstore.unity3d.com/en/#!/content/21027)
-* [Everyplay](https://www.assetstore.unity3d.com/en/#!/content/16005)
+1. Unity 5 is required to open this project.
+2. Download and import the latest [Unity Ads](https://www.assetstore.unity3d.com/en/#!/content/21027) and [Everyplay](https://www.assetstore.unity3d.com/en/#!/content/16005) asset packages.
+3. Platform must be set to iOS or Android in Build Settings to run or build this project.
+4. Before building for iOS, be sure to update the following options in Player Settings:
+	* Scripting Backend: IL2CPP
+	* Architecture: Universal
 
 ## How It Works
 
