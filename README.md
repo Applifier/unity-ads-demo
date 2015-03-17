@@ -16,7 +16,7 @@ After downloading the project and importing the Unity Ads and Everyplay asset pa
 1. Open the scene named _StartMenu_ located under _SpaceAds_ in the **Project** window
 2. Press the **Play** button to run the game in Editor.
 
-**Note:** Ads shown in Editor are only placeholders, and Everyplay is only functional when running on device.
+**Note:** Ads shown in Editor are only static placeholders; video ads will only appear on device. Everyplay is also only functional when running on device.
 
 ## How It Works
 
