@@ -28,12 +28,22 @@ public class SpaceAdsDemo : MonoBehaviour
 
 	void Start ()
 	{
-		if (Debug.isDebugBuild) ResetCoinCount();
+		if (Debug.isDebugBuild) 
+		{
+			ResetCoinCount();
+			ResetRewardTimeout();
+		}
 	}
 
 	public void ResetCoinCount ()
 	{
 		Inventory.SetCoins(initialCoinCount);
 		Debug.Log(string.Format("Coin count reset to {0}.",initialCoinCount));
+	}
+
+	public void ResetRewardTimeout ()
+	{
+
+		Debug.Log("Reward timeout reset.");
 	}
 }

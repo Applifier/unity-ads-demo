@@ -22,6 +22,8 @@ public class UnityAdsHelper : MonoBehaviour
 	public bool showWarningLogs = true;
 	public bool showErrorLogs = true;
 
+	private float _initStartTime = 0f;
+
 #if UNITY_IOS || UNITY_ANDROID
 
 	//--- Unity Ads Setup and Initialization
@@ -62,12 +64,29 @@ public class UnityAdsHelper : MonoBehaviour
 			Debug.Log(string.Format("Initializing Unity Ads for game ID {0} with test mode {1}...",
 			                        gameID, isTestModeEnabled ? "enabled" : "disabled"));
 			
+			_initStartTime = Time.time;
+
 			Advertisement.Initialize(gameID,isTestModeEnabled);
+
+			StartCoroutine(LogWhenUnityAdsIsInitialized());
 		}
 	}
-	
-	//--- Static Helper Methods ---
 
+	private IEnumerator LogWhenUnityAdsIsInitialized ()
+	{
+		do yield return new WaitForSeconds(0.5f);
+		while (!initialized);
+		
+		Debug.Log(string.Format("Unity Ads was initialized in {0} seconds.",Time.time - _initStartTime));
+		yield break;
+	}
+	
+	//--- Static Helper Methods
+
+	public static bool initialized { get { return IsInitialized(); }}
+	
+	public static bool IsInitialized () { return Advertisement.isInitialized; }
+	
 	public static bool IsReady (string zoneID = null) 
 	{ 
 		if (string.IsNullOrEmpty(zoneID)) zoneID = null;
@@ -81,6 +100,8 @@ public class UnityAdsHelper : MonoBehaviour
 		
 		if (Advertisement.isReady(zoneID))
 		{
+			Debug.Log("Showing ad now...");
+			
 			ShowOptions options = new ShowOptions();
 			options.resultCallback = HandleShowResult;
 			options.pause = true;
