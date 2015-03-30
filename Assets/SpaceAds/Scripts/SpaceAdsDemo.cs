@@ -31,7 +31,7 @@ public class SpaceAdsDemo : MonoBehaviour
 		if (Debug.isDebugBuild) 
 		{
 			ResetCoinCount();
-			ResetRewardTimeout();
+		//	ResetRewardCooldown();
 		}
 	}
 
@@ -41,9 +41,9 @@ public class SpaceAdsDemo : MonoBehaviour
 		Debug.Log(string.Format("Coin count reset to {0}.",initialCoinCount));
 	}
 
-	public void ResetRewardTimeout ()
+	public void ResetRewardCooldown ()
 	{
-
-		Debug.Log("Reward timeout reset.");
+		// TODO: Add logic for resetting a persistent reward cooldown.
+		Debug.Log("Reward cooldown reset.");
 	}
 }
