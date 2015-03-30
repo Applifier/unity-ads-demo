@@ -254,7 +254,9 @@ PlayerSettings:
   psp2InfoBarColor: 0
   psmSplashimage: {fileID: 0}
   spritePackerPolicy: 
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    4: EVERYPLAY_IPHONE
+    7: EVERYPLAY_ANDROID
   metroPackageName: unity-ads-demo
   metroPackageLogo: 
   metroPackageLogo140: 
