@@ -9,8 +9,7 @@ using UnityEngine.Advertisements;
 public class GameplayDemo : MonoBehaviour 
 {
 	public enum Stage { StartMenu, PrevLevel, NextLevel, }
-	public enum LevelState { Start, Gameplay, Success, Fail, }
-	
+
 	public Button leftButton;
 	public Button rightButton;
 	public Button startButton;
@@ -32,7 +31,6 @@ public class GameplayDemo : MonoBehaviour
 	}
 	public Level[] levels;
 
-	private LevelState _levelState;
 	private int _levelIndex = 0;
 
 	void Start ()
@@ -58,7 +56,6 @@ public class GameplayDemo : MonoBehaviour
 			if (animatorState != null) 
 			{
 				animator.Play(animatorState);
-				_levelState = LevelState.Gameplay;
 
 #if EVERYPLAY_IPHONE || EVERYPLAY_ANDROID
 				Everyplay.StartRecording();

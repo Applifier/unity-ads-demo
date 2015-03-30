@@ -14,7 +14,9 @@ public class GetCoinsButton : MonoBehaviour
 	public int rewardCoinAmount = 250;
 	public RewardNotice rewardNotice;
 	
-	private static float _timeUntilInteractable = 0f;
+	public bool interactable;
+
+	private static float _rewardCooldownTime = 0f;
 
 	private Button _button;
 
@@ -27,16 +29,14 @@ public class GetCoinsButton : MonoBehaviour
 
 	void Update ()
 	{
-		_button.interactable = IsReady();
+		if (interactable) _button.interactable = IsReady();
 	}
 
 	private bool IsReady ()
 	{
-		if (Time.time > _timeUntilInteractable)
+		if (Time.time > _rewardCooldownTime)
 		{
-			if (string.IsNullOrEmpty(zoneID)) zoneID = null;
-			
-			return Advertisement.isReady(zoneID);
+			return UnityAdsHelper.IsReady(zoneID);
 		}
 		
 		return false;
@@ -48,6 +48,8 @@ public class GetCoinsButton : MonoBehaviour
 		
 		if (Advertisement.isReady(zoneID))
 		{
+			Debug.Log("Showing ad now...");
+
 			ShowOptions options = new ShowOptions();
 			options.resultCallback = HandleShowResultWithReward;
 			options.pause = true;
@@ -67,14 +69,7 @@ public class GetCoinsButton : MonoBehaviour
 		{
 		case ShowResult.Finished:
 			Debug.Log("The ad was successfully shown. Granting the user a reward...");
-
-			Inventory.AddCoins(rewardCoinAmount);
-
-			rewardNotice.SetAmount(rewardCoinAmount);
-			rewardNotice.Show();
-
-			_timeUntilInteractable = Time.time + rewardCooldown;
-
+			RewardUserAndUpdateCooldownTime();
 			break;
 		case ShowResult.Skipped:
 			Debug.Log("The ad was skipped before reaching the end.");
@@ -84,6 +79,19 @@ public class GetCoinsButton : MonoBehaviour
 			break;
 		}
 	}
+
+	private void RewardUserAndUpdateCooldownTime ()
+	{
+		Inventory.AddCoins(rewardCoinAmount);
+		
+		rewardNotice.SetAmount(rewardCoinAmount);
+		rewardNotice.Show();
+		
+		_rewardCooldownTime = Time.time + rewardCooldown;
+
+		Debug.Log(string.Format("User was rewarded. Next rewarded ad is available in {0} seconds.",rewardCooldown));
+	}
+
 #else
 	public void ShowAd ()
 	{
