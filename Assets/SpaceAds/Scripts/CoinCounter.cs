@@ -6,24 +6,22 @@ public class CoinCounter : MonoBehaviour
 {
 	public Text counterText;
 
-	public static int _count;
-
 	void Start ()
 	{
-		Refresh();
+		OnCoinCountUpdated();
+
+		SpaceAdsDemo.OnCoinCountUpdated += OnCoinCountUpdated;
 	}
 
-	void Update ()
+	void OnDestroy ()
 	{
-		if (counterText != null) counterText.text = _count.ToString();
+		SpaceAdsDemo.OnCoinCountUpdated -= OnCoinCountUpdated;
 	}
 
-	public static void Refresh ()
+	private void OnCoinCountUpdated ()
 	{
-		if (PlayerPrefs.HasKey(Constants.KEY_COINCOUNT))
-		{
-			_count = PlayerPrefs.GetInt(Constants.KEY_COINCOUNT);
-		}
-		else SpaceAdsDemo.Instance.ResetCoinCount();
+		if (object.ReferenceEquals(counterText,null)) return;
+
+		counterText.text = Inventory.GetCoinCount().ToString();
 	}
 }

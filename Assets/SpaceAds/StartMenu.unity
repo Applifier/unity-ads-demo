@@ -349,7 +349,6 @@ MonoBehaviour:
   zoneID: rewardedVideoZone
   rewardCooldown: 300
   rewardCoinAmount: 250
-  rewardNotice: {fileID: 1952016301}
   interactable: 0
 --- !u!114 &679215152
 MonoBehaviour:
@@ -614,7 +613,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4f5084a74ca14cacb5ee2676f0fcbd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialCoinCount: 0
 --- !u!4 &751334426
 Transform:
   m_ObjectHideFlags: 0

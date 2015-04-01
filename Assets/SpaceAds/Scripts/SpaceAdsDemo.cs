@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 public class SpaceAdsDemo : MonoBehaviour 
 {
-	public int initialCoinCount = 0;
+	public static Action<int> OnCoinsAdded;
+	public static Action OnCoinCountUpdated;
 
 	private static SpaceAdsDemo _instance;
 	public static SpaceAdsDemo Instance { get { return GetInstance(); }}
@@ -30,20 +32,8 @@ public class SpaceAdsDemo : MonoBehaviour
 	{
 		if (Debug.isDebugBuild) 
 		{
-			ResetCoinCount();
-		//	ResetRewardCooldown();
+			Inventory.ResetCoinCount();
+			GetCoinsButton.ResetRewardCooldownTime();
 		}
-	}
-
-	public void ResetCoinCount ()
-	{
-		Inventory.SetCoins(initialCoinCount);
-		Debug.Log(string.Format("Coin count reset to {0}.",initialCoinCount));
-	}
-
-	public void ResetRewardCooldown ()
-	{
-		// TODO: Add logic for resetting a persistent reward cooldown.
-		Debug.Log("Reward cooldown reset.");
 	}
 }
