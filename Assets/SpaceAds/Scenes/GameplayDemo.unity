@@ -1067,7 +1067,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b4e82202a21a24f279c375babc93e76d, type: 2}
   m_IsPrefabParent: 0
---- !u!224 &1124879204
+--- !u!224 &1124879204 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 22493336, guid: b4e82202a21a24f279c375babc93e76d,
     type: 2}
@@ -1284,7 +1284,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47b33065673534a93824101dbbf18fe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  easeOutClip: {fileID: 0}
 --- !u!4 &1309860973
 Transform:
   m_ObjectHideFlags: 0
@@ -1764,6 +1763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d3ec25fdd3e24a289d644a87df348f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactable: 0
 --- !u!114 &1662968990
 MonoBehaviour:
   m_ObjectHideFlags: 0

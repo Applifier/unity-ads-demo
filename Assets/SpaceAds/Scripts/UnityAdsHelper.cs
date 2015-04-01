@@ -1,10 +1,11 @@
 ﻿/// <summary>
-/// UnityAdsHelper.cs - Written for Unity Ads Asset Store v1.1.0 (SDK 1.4.0)
+/// UnityAdsHelper.cs - Written for Unity Ads Asset Store v1.1.2
 ///  by Nikkolai Davenport <nikkolai@unity3d.com>
 /// 
 /// Customized for use with the Space Ads Demo presented during GDC 2015 Dev Day Sessions.
 /// </summary>
 
+using System;
 using UnityEngine;
 using System.Collections;
 #if UNITY_IOS || UNITY_ANDROID
@@ -21,8 +22,10 @@ public class UnityAdsHelper : MonoBehaviour
 	public bool showDebugLogs;
 	public bool showWarningLogs = true;
 	public bool showErrorLogs = true;
-
-	private float _initStartTime = 0f;
+	
+	private static Action _handleFinished;
+	private static Action _handleSkipped;
+	private static Action _handleFailed;
 
 #if UNITY_IOS || UNITY_ANDROID
 
@@ -30,9 +33,10 @@ public class UnityAdsHelper : MonoBehaviour
 
 	void Start ()
 	{
-		Debug.Log("Attempting to initialize Unity Ads now...");
+		Debug.Log("Running precheck for Unity Ads initialization...");
 
 		string gameID = null;
+
 	#if UNITY_IOS
 		gameID = iosGameID;
 	#elif UNITY_ANDROID
@@ -61,10 +65,8 @@ public class UnityAdsHelper : MonoBehaviour
 			}
 			
 			bool isTestModeEnabled = Debug.isDebugBuild && enableTestMode;
-			Debug.Log(string.Format("Initializing Unity Ads for game ID {0} with test mode {1}...",
+			Debug.Log(string.Format("Precheck done. Initializing Unity Ads for game ID {0} with test mode {1}...",
 			                        gameID, isTestModeEnabled ? "enabled" : "disabled"));
-			
-			_initStartTime = Time.time;
 
 			Advertisement.Initialize(gameID,isTestModeEnabled);
 
@@ -74,10 +76,12 @@ public class UnityAdsHelper : MonoBehaviour
 
 	private IEnumerator LogWhenUnityAdsIsInitialized ()
 	{
-		do yield return new WaitForSeconds(0.5f);
+		float initStartTime = Time.time;
+
+		do yield return new WaitForSeconds(0.1f);
 		while (!initialized);
-		
-		Debug.Log(string.Format("Unity Ads was initialized in {0} seconds.",Time.time - _initStartTime));
+
+		Debug.Log(string.Format("Unity Ads was initialized in {0:F1} seconds.",Time.time - initStartTime));
 		yield break;
 	}
 	
@@ -88,16 +92,23 @@ public class UnityAdsHelper : MonoBehaviour
 	public static bool IsInitialized () { return Advertisement.isInitialized; }
 	
 	public static bool IsReady (string zoneID = null) 
-	{ 
+	{
 		if (string.IsNullOrEmpty(zoneID)) zoneID = null;
 		
 		return Advertisement.isReady(zoneID);
 	}
-	
-	public static void ShowAd (string zoneID = null)
+
+	public static void ShowAd (string zoneID = null, 
+	                           Action handleFinished = null, 
+	                           Action handleSkipped = null, 
+	                           Action handleFailed = null)
 	{
 		if (string.IsNullOrEmpty(zoneID)) zoneID = null;
-		
+
+		_handleFinished = handleFinished;
+		_handleSkipped = handleSkipped;
+		_handleFailed = handleFailed;
+
 		if (Advertisement.isReady(zoneID))
 		{
 			Debug.Log("Showing ad now...");
@@ -111,7 +122,7 @@ public class UnityAdsHelper : MonoBehaviour
 		else 
 		{
 			Debug.LogWarning(string.Format("Unable to show ad. The ad placement zone ($0) is not ready.",
-			                               zoneID == null ? "default" : zoneID));
+			                               object.ReferenceEquals(zoneID,null) ? "default" : zoneID));
 		}
 	}
 
@@ -121,12 +132,15 @@ public class UnityAdsHelper : MonoBehaviour
 		{
 		case ShowResult.Finished:
 			Debug.Log("The ad was successfully shown.");
+			if (!object.ReferenceEquals(_handleFinished,null)) _handleFinished();
 			break;
 		case ShowResult.Skipped:
-			Debug.Log("The ad was skipped before reaching the end.");
+			Debug.LogWarning("The ad was skipped before reaching the end.");
+			if (!object.ReferenceEquals(_handleSkipped,null)) _handleSkipped();
 			break;
 		case ShowResult.Failed:
 			Debug.LogError("The ad failed to be shown.");
+			if (!object.ReferenceEquals(_handleFailed,null)) _handleFailed();
 			break;
 		}
 	}

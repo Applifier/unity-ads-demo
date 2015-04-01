@@ -3,8 +3,8 @@ using System.Collections;
 
 public class LevelLoader : MonoBehaviour 
 {
-	private bool _isLoading;
-	public bool isLoading { get { return _isLoading; }}
+	private static bool _isLoading;
+	public static bool isLoading { get { return _isLoading; }}
 
 	private static LevelLoader _instance;
 	public static LevelLoader Instance { get { return GetInstance(); }}
@@ -23,6 +23,16 @@ public class LevelLoader : MonoBehaviour
 	{
 		if (_instance == null) _instance = this;
 		else Destroy(gameObject);		
+	}
+
+	void OnLevelWasLoaded (int level)
+	{
+		if (_isLoading)
+		{
+			_isLoading = false;
+
+			Debug.Log("Level was loaded.");
+		}
 	}
 
 	public void LoadLevel (string name) 
