@@ -1,8 +1,6 @@
 ﻿/// <summary>
 /// UnityAdsHelper.cs - Written for Unity Ads Asset Store v1.1.2
-///  by Nikkolai Davenport <nikkolai@unity3d.com>
-/// 
-/// Customized for use with the Space Ads Demo presented during GDC 2015 Dev Day Sessions.
+///  by Nikkolai Davenport <nikkolai@unity3d.com> 
 /// </summary>
 
 using System;
@@ -121,7 +119,7 @@ public class UnityAdsHelper : MonoBehaviour
 		}
 		else 
 		{
-			Debug.LogWarning(string.Format("Unable to show ad. The ad placement zone ($0) is not ready.",
+			Debug.LogWarning(string.Format("Unable to show ad. The ad placement zone {0} is not ready.",
 			                               object.ReferenceEquals(zoneID,null) ? "default" : zoneID));
 		}
 	}
@@ -144,17 +142,24 @@ public class UnityAdsHelper : MonoBehaviour
 			break;
 		}
 	}
+
 #else
+
 	void Start ()
 	{
 		Debug.LogWarning("Unity Ads is not supported under the current build platform.");
 	}
+
+	public static bool initialized { get { return IsInitialized(); }}
+	
+	public static bool IsInitialized () { return false; }
+	
+	public static bool IsReady (string zoneID = null) { return false; }
 
 	public static void ShowAd (string zoneID = null)
 	{
 		Debug.LogError("Failed to show ad. Unity Ads is not supported under the current build platform.");
 	}
 
-	public static bool IsReady (string zoneID = null) { return false; }
 #endif
 }
