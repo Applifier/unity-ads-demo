@@ -7,14 +7,14 @@ public class RewardNotice : MonoBehaviour
 	public Text text;
 	public Animator animator;
 
-	void Start ()
+	void Awake ()
 	{
-		SpaceAdsDemo.OnCoinsAdded += SetAmountAndShow;
+		SpaceAdsDemo.OnCoinsAddedAction += SetAmountAndShow;
 	}
 
 	void OnDestroy ()
 	{
-		SpaceAdsDemo.OnCoinsAdded -= SetAmountAndShow;
+		SpaceAdsDemo.OnCoinsAddedAction -= SetAmountAndShow;
 	}
 
 	public void SetAmountAndShow (int amount)
