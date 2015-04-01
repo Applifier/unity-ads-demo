@@ -4,8 +4,8 @@ using System.Collections;
 
 public class SpaceAdsDemo : MonoBehaviour 
 {
-	public static Action<int> OnCoinsAdded;
-	public static Action OnCoinCountUpdated;
+	public static Action<int> OnCoinsAddedAction;
+	public static Action OnCoinCountUpdatedAction;
 
 	private static SpaceAdsDemo _instance;
 	public static SpaceAdsDemo Instance { get { return GetInstance(); }}
@@ -34,6 +34,22 @@ public class SpaceAdsDemo : MonoBehaviour
 		{
 			Inventory.ResetCoinCount();
 			GetCoinsButton.ResetRewardCooldownTime();
+		}
+	}
+
+	public static void OnCoinsAdded (int amount)
+	{
+		if (!object.ReferenceEquals(OnCoinsAddedAction,null)) 
+		{
+			OnCoinsAddedAction(amount);
+		}
+	}
+
+	public static void OnCoinCountUpdated ()
+	{
+		if (!object.ReferenceEquals(OnCoinCountUpdatedAction,null)) 
+		{
+			OnCoinCountUpdatedAction();
 		}
 	}
 }

@@ -64,7 +64,7 @@ public class GetCoinsButton : MonoBehaviour
 
 	public static DateTime GetRewardCooldownTime ()
 	{
-		if (object.ReferenceEquals(_rewardCooldownTime,null))
+		if (object.Equals(_rewardCooldownTime,default(DateTime)))
 		{
 			if (PlayerPrefs.HasKey(Constants.KEY_REWARD_COOLDOWN_TIME))
 			{
@@ -72,7 +72,7 @@ public class GetCoinsButton : MonoBehaviour
 			}
 			else _rewardCooldownTime = DateTime.UtcNow;
 		}
-		
+
 		return _rewardCooldownTime;
 	}
 	
