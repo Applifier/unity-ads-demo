@@ -90,18 +90,38 @@ public class UnityAdsHelper : MonoBehaviour
 	
 	public static bool IsInitialized () { return Advertisement.isInitialized; }
 	
-	public static bool IsReady (string zoneID = null) 
+	public static bool IsReady () 
+	{ 
+		return IsReady(null); 
+	}
+	public static bool IsReady (string zoneID) 
 	{
 		if (string.IsNullOrEmpty(zoneID)) zoneID = null;
 		
 		return Advertisement.isReady(zoneID);
 	}
 
-	public static void ShowAd (string zoneID = null, 
-	                           Action onContinue = null,
-	                           Action handleFinished = null, 
-	                           Action handleSkipped = null, 
-	                           Action handleFailed = null)
+	public static void ShowAd () 
+	{
+		ShowAd(null,null,null,null,null);
+	}
+	public static void ShowAd (string zoneID) 
+	{
+		ShowAd(zoneID,null,null,null,null);
+	}
+	public static void ShowAd (string zoneID, Action onContinue) 
+	{
+		ShowAd(zoneID,onContinue,null,null,null);
+	}
+	public static void ShowAd (string zoneID, Action onContinue, Action handleFinished) 
+	{
+		ShowAd(zoneID,onContinue,handleFinished,null,null);
+	}
+	public static void ShowAd (string zoneID, Action onContinue, Action handleFinished, Action handleSkipped) 
+	{
+		ShowAd(zoneID,onContinue,handleFinished,handleSkipped,null);
+	}
+	public static void ShowAd (string zoneID, Action onContinue, Action handleFinished, Action handleSkipped, Action handleFailed)
 	{
 		if (string.IsNullOrEmpty(zoneID)) zoneID = null;
 
