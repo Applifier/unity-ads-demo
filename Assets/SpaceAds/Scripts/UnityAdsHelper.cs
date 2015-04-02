@@ -21,6 +21,7 @@ public class UnityAdsHelper : MonoBehaviour
 	public bool showWarningLogs = true;
 	public bool showErrorLogs = true;
 	
+	private static Action _onContinue;
 	private static Action _handleFinished;
 	private static Action _handleSkipped;
 	private static Action _handleFailed;
@@ -89,20 +90,42 @@ public class UnityAdsHelper : MonoBehaviour
 	
 	public static bool IsInitialized () { return Advertisement.isInitialized; }
 	
-	public static bool IsReady (string zoneID = null) 
+	public static bool IsReady () 
+	{ 
+		return IsReady(null); 
+	}
+	public static bool IsReady (string zoneID) 
 	{
 		if (string.IsNullOrEmpty(zoneID)) zoneID = null;
 		
 		return Advertisement.isReady(zoneID);
 	}
 
-	public static void ShowAd (string zoneID = null, 
-	                           Action handleFinished = null, 
-	                           Action handleSkipped = null, 
-	                           Action handleFailed = null)
+	public static void ShowAd () 
+	{
+		ShowAd(null,null,null,null,null);
+	}
+	public static void ShowAd (string zoneID) 
+	{
+		ShowAd(zoneID,null,null,null,null);
+	}
+	public static void ShowAd (string zoneID, Action onContinue) 
+	{
+		ShowAd(zoneID,onContinue,null,null,null);
+	}
+	public static void ShowAd (string zoneID, Action onContinue, Action handleFinished) 
+	{
+		ShowAd(zoneID,onContinue,handleFinished,null,null);
+	}
+	public static void ShowAd (string zoneID, Action onContinue, Action handleFinished, Action handleSkipped) 
+	{
+		ShowAd(zoneID,onContinue,handleFinished,handleSkipped,null);
+	}
+	public static void ShowAd (string zoneID, Action onContinue, Action handleFinished, Action handleSkipped, Action handleFailed)
 	{
 		if (string.IsNullOrEmpty(zoneID)) zoneID = null;
 
+		_onContinue = onContinue;
 		_handleFinished = handleFinished;
 		_handleSkipped = handleSkipped;
 		_handleFailed = handleFailed;
@@ -141,6 +164,8 @@ public class UnityAdsHelper : MonoBehaviour
 			if (!object.ReferenceEquals(_handleFailed,null)) _handleFailed();
 			break;
 		}
+
+		if (!object.ReferenceEquals(_onContinue,null)) _onContinue();
 	}
 
 #else
@@ -156,7 +181,11 @@ public class UnityAdsHelper : MonoBehaviour
 	
 	public static bool IsReady (string zoneID = null) { return false; }
 
-	public static void ShowAd (string zoneID = null)
+	public static void ShowAd (string zoneID = null, 
+	                           Action onContinue = null,
+	                           Action handleFinished = null, 
+	                           Action handleSkipped = null, 
+	                           Action handleFailed = null)
 	{
 		Debug.LogError("Failed to show ad. Unity Ads is not supported under the current build platform.");
 	}
