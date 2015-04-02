@@ -2,9 +2,6 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-#if UNITY_IOS || UNITY_ANDROID
-using UnityEngine.Advertisements;
-#endif
 
 public class GameplayDemo : MonoBehaviour 
 {
@@ -83,13 +80,9 @@ public class GameplayDemo : MonoBehaviour
 #if UNITY_IOS || UNITY_ANDROID
 		string zoneID = null;
 
-		if (showInterstitialAds && Advertisement.isReady(zoneID))
+		if (showInterstitialAds && UnityAdsHelper.IsReady(zoneID))
 		{
-			Advertisement.Show(zoneID, new ShowOptions 
-			{
-				pause = true,
-				resultCallback = result => { DoContinue(); }
-			});
+			UnityAdsHelper.ShowAd(zoneID,DoContinue);
 		}
 		else DoContinue();
 #else
