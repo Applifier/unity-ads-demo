@@ -41,8 +41,12 @@ public class UnityAdsHelper : MonoBehaviour
 	#elif UNITY_ANDROID
 		gameID = androidGameID;
 	#endif
-		
-		if (Advertisement.isInitialized)
+
+		if (!Advertisement.isSupported)
+		{
+			Debug.LogWarning("Unity Ads is not supported on the current runtime platform.");
+		}
+		else if (Advertisement.isInitialized)
 		{
 			Debug.LogWarning("Unity Ads is already initialized.");
 		}
@@ -78,7 +82,7 @@ public class UnityAdsHelper : MonoBehaviour
 		float initStartTime = Time.time;
 
 		do yield return new WaitForSeconds(0.1f);
-		while (!initialized);
+		while (!Advertisement.isInitialized);
 
 		Debug.Log(string.Format("Unity Ads was initialized in {0:F1} seconds.",Time.time - initStartTime));
 		yield break;
@@ -86,9 +90,9 @@ public class UnityAdsHelper : MonoBehaviour
 	
 	//--- Static Helper Methods
 
-	public static bool initialized { get { return IsInitialized(); }}
-	
-	public static bool IsInitialized () { return Advertisement.isInitialized; }
+	public static bool isShowing { get { return Advertisement.isShowing; }}
+	public static bool isSupported { get { return Advertisement.isSupported; }}
+	public static bool isInitialized { get { return Advertisement.isInitialized; }}
 	
 	public static bool IsReady () 
 	{ 
@@ -175,10 +179,10 @@ public class UnityAdsHelper : MonoBehaviour
 		Debug.LogWarning("Unity Ads is not supported under the current build platform.");
 	}
 
-	public static bool initialized { get { return false; }}
-	
-	public static bool IsInitialized () { return false; }
-	
+	public static bool isShowing { get { return false; }}
+	public static bool isSupported { get { return false; }}
+	public static bool isInitialized { get { return false; }}
+
 	public static bool IsReady () { return false; }
 	public static bool IsReady (string zoneID) { return false; }
 
