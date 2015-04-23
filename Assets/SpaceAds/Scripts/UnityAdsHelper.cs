@@ -186,12 +186,27 @@ public class UnityAdsHelper : MonoBehaviour
 	public static bool IsReady () { return false; }
 	public static bool IsReady (string zoneID) { return false; }
 
-	public static void ShowAd () {}
-	public static void ShowAd (string zoneID) {}
-	public static void ShowAd (string zoneID, Action onContinue) {}
-	public static void ShowAd (string zoneID, Action onContinue, Action handleFinished) {}
-	public static void ShowAd (string zoneID, Action onContinue, Action handleFinished, Action handleSkipped) {}
-	public static void ShowAd (string zoneID, Action onContinue, Action handleFinished, Action handleSkipped, Action handleFailed)
+	public static void ShowAd () 
+	{
+		ShowAd(null,null,null,null,null);
+	}
+	public static void ShowAd (string zoneID) 
+	{
+		ShowAd(zoneID,null,null,null,null);
+	}
+	public static void ShowAd (string zoneID, Action handleFinished) 
+	{
+		ShowAd(zoneID,handleFinished,null,null,null);
+	}
+	public static void ShowAd (string zoneID, Action handleFinished, Action handleSkipped) 
+	{
+		ShowAd(zoneID,handleFinished,handleSkipped,null,null);
+	}
+	public static void ShowAd (string zoneID, Action handleFinished, Action handleSkipped, Action handleFailed) 
+	{
+		ShowAd(zoneID,handleFinished,handleSkipped,handleFailed,null);
+	}
+	public static void ShowAd (string zoneID, Action handleFinished, Action handleSkipped, Action handleFailed, Action onContinue)
 	{
 		Debug.LogError("Failed to show ad. Unity Ads is not supported under the current build platform.");
 	}
