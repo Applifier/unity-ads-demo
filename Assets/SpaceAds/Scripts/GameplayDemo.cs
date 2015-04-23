@@ -82,7 +82,7 @@ public class GameplayDemo : MonoBehaviour
 
 		if (showInterstitialAds && UnityAdsHelper.IsReady(zoneID))
 		{
-			UnityAdsHelper.ShowAd(zoneID,DoContinue);
+			UnityAdsHelper.ShowAd(zoneID,null,null,null,DoContinue);
 		}
 		else DoContinue();
 #else

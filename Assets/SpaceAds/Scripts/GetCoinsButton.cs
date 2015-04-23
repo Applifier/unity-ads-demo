@@ -42,7 +42,7 @@ public class GetCoinsButton : MonoBehaviour
 	
 	public void ShowAd ()
 	{
-		UnityAdsHelper.ShowAd(zoneID,null,RewardUserAndUpdateCooldownTime);
+		UnityAdsHelper.ShowAd(zoneID,RewardUserAndUpdateCooldownTime);
 	}
 
 	private void RewardUserAndUpdateCooldownTime ()
