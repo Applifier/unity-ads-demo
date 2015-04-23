@@ -21,10 +21,10 @@ public class UnityAdsHelper : MonoBehaviour
 	public bool showWarningLogs = true;
 	public bool showErrorLogs = true;
 	
-	private static Action _onContinue;
 	private static Action _handleFinished;
 	private static Action _handleSkipped;
 	private static Action _handleFailed;
+	private static Action _onContinue;
 
 #if UNITY_IOS || UNITY_ANDROID
 
@@ -113,26 +113,26 @@ public class UnityAdsHelper : MonoBehaviour
 	{
 		ShowAd(zoneID,null,null,null,null);
 	}
-	public static void ShowAd (string zoneID, Action onContinue) 
+	public static void ShowAd (string zoneID, Action handleFinished) 
 	{
-		ShowAd(zoneID,onContinue,null,null,null);
+		ShowAd(zoneID,handleFinished,null,null,null);
 	}
-	public static void ShowAd (string zoneID, Action onContinue, Action handleFinished) 
+	public static void ShowAd (string zoneID, Action handleFinished, Action handleSkipped) 
 	{
-		ShowAd(zoneID,onContinue,handleFinished,null,null);
+		ShowAd(zoneID,handleFinished,handleSkipped,null,null);
 	}
-	public static void ShowAd (string zoneID, Action onContinue, Action handleFinished, Action handleSkipped) 
+	public static void ShowAd (string zoneID, Action handleFinished, Action handleSkipped, Action handleFailed) 
 	{
-		ShowAd(zoneID,onContinue,handleFinished,handleSkipped,null);
+		ShowAd(zoneID,handleFinished,handleSkipped,handleFailed,null);
 	}
-	public static void ShowAd (string zoneID, Action onContinue, Action handleFinished, Action handleSkipped, Action handleFailed)
+	public static void ShowAd (string zoneID, Action handleFinished, Action handleSkipped, Action handleFailed, Action onContinue)
 	{
 		if (string.IsNullOrEmpty(zoneID)) zoneID = null;
 
-		_onContinue = onContinue;
 		_handleFinished = handleFinished;
 		_handleSkipped = handleSkipped;
 		_handleFailed = handleFailed;
+		_onContinue = onContinue;
 
 		if (Advertisement.isReady(zoneID))
 		{
