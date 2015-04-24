@@ -17,7 +17,6 @@ public class GetCoinsButton : MonoBehaviour
 
 	private static DateTime _rewardCooldownTime;
 	
-#if UNITY_IOS || UNITY_ANDROID
 	void Start ()
 	{
 		_button = GetComponent<Button>();
@@ -55,12 +54,8 @@ public class GetCoinsButton : MonoBehaviour
 
 		Debug.Log(string.Format("User was rewarded. Next rewarded ad is available in {0} seconds.",rewardCooldown));
 	}
-#else
-	public void ShowAd ()
-	{
-		Debug.LogError("Failed to show ad. Unity Ads is not supported under the current build platform.");
-	}
-#endif
+
+	//--- Reward Cooldown Methods
 
 	public static DateTime GetRewardCooldownTime ()
 	{

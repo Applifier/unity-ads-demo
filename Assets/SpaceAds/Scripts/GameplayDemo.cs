@@ -77,7 +77,6 @@ public class GameplayDemo : MonoBehaviour
 
 	public void Continue ()
 	{
-#if UNITY_IOS || UNITY_ANDROID
 		string zoneID = null;
 
 		if (showInterstitialAds && UnityAdsHelper.IsReady(zoneID))
@@ -85,9 +84,6 @@ public class GameplayDemo : MonoBehaviour
 			UnityAdsHelper.ShowAd(zoneID,null,null,null,DoContinue);
 		}
 		else DoContinue();
-#else
-		DoContinue();
-#endif
 	}
 
 	private void DoContinue ()
