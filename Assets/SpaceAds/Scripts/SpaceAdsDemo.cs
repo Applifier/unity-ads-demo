@@ -30,11 +30,13 @@ public class SpaceAdsDemo : MonoBehaviour
 
 	void Start ()
 	{
-		if (Debug.isDebugBuild) 
-		{
+		//if (Debug.isDebugBuild) 
+		//{
 			Inventory.ResetCoinCount();
 			GetCoinsButton.ResetRewardCooldownTime();
-		}
+
+		//}
+
 	}
 
 	public static void OnCoinsAdded (int amount)

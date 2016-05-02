@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Advertisements;
 
 public class GameplayDemo : MonoBehaviour 
 {
@@ -32,19 +33,19 @@ public class GameplayDemo : MonoBehaviour
 
 	void Start ()
 	{
+		UnlockLevel (1, false);
+
 		if (Debug.isDebugBuild)
 		{
 			UnlockAllLevels(unlockAll);
 		}
 		else RefreshLevelUnlockStates();
 
-#if EVERYPLAY_IPHONE || EVERYPLAY_ANDROID
-		Everyplay.Initialize();
-#endif
 	}
 
 	public void StartGameplay ()
 	{
+		LevelLoader.Instance.LoadLevel ("Gameplay");
 		Debug.Log("Starting gameplay...");
 		if (animator != null)
 		{
@@ -54,9 +55,6 @@ public class GameplayDemo : MonoBehaviour
 			{
 				animator.Play(animatorState);
 
-#if EVERYPLAY_IPHONE || EVERYPLAY_ANDROID
-				Everyplay.StartRecording();
-#endif
 			}
 		}
 		else Debug.LogWarning("Unable to start gameplay.");
@@ -65,23 +63,15 @@ public class GameplayDemo : MonoBehaviour
 	public void EndGameplay ()
 	{
 		Debug.Log("End of gameplay.");
-#if EVERYPLAY_IPHONE || EVERYPLAY_ANDROID
-		Everyplay.StopRecording();
-
-		Dictionary<string,object> metadata = new Dictionary<string,object>();
-		metadata.Add("gamename","SpaceAds");
-		metadata.Add("levelname",string.Format("Level {0}",_levelIndex+1));
-		Everyplay.SetMetadata(metadata);
-#endif
 	}
 
 	public void Continue ()
 	{
 		string zoneID = null;
 
-		if (showInterstitialAds && UnityAdsHelper.IsReady(zoneID))
+		if (showInterstitialAds && Advertisement.IsReady(zoneID))
 		{
-			UnityAdsHelper.ShowAd(zoneID,null,null,null,DoContinue);
+			Advertisement.Show(zoneID);
 		}
 		else DoContinue();
 	}

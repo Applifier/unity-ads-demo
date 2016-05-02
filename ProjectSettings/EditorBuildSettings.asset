@@ -9,3 +9,5 @@ EditorBuildSettings:
     path: Assets/SpaceAds/StartMenu.unity
   - enabled: 1
     path: Assets/SpaceAds/Scenes/GameplayDemo.unity
+  - enabled: 1
+    path: Assets/SpaceAds/Scenes/Gameplay.unity

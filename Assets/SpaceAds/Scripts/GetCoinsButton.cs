@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.Advertisements;
 
 [RequireComponent (typeof (Button))]
 public class GetCoinsButton : MonoBehaviour 
@@ -34,14 +35,14 @@ public class GetCoinsButton : MonoBehaviour
 	{
 		if (DateTime.Compare(DateTime.UtcNow,_rewardCooldownTime) > 0)
 		{
-			return UnityAdsHelper.IsReady(zoneID);
+			return Advertisement.IsReady(zoneID);
 		}
 		else return false;
 	}
 	
 	public void ShowAd ()
 	{
-		UnityAdsHelper.ShowAd(zoneID,RewardUserAndUpdateCooldownTime);
+		Advertisement.Show(zoneID);
 	}
 
 	private void RewardUserAndUpdateCooldownTime ()

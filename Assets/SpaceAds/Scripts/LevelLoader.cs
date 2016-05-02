@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour 
 {
@@ -45,7 +46,7 @@ public class LevelLoader : MonoBehaviour
 				
 				Debug.Log(string.Format("Loading level '{0}'...",name));
 				
-				Application.LoadLevel(name);
+				SceneManager.LoadScene(name);
 			}
 			else Debug.LogError("Failed to load level. Name cannot be null or empty.");
 		}
@@ -56,13 +57,13 @@ public class LevelLoader : MonoBehaviour
 	{
 		if (!_isLoading)
 		{
-			if (index >= 0 && index < Application.levelCount)
+			if (index >= 0 && index < SceneManager.sceneCount)
 			{
 				_isLoading = true;
 				
 				Debug.Log(string.Format("Loading level at index {0}...",index));
 				
-				Application.LoadLevel(index);
+				SceneManager.LoadScene(index);
 			}
 			else Debug.LogError("Failed to load level. Index is out of bounds."); 
 		}

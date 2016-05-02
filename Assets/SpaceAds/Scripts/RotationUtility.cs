@@ -6,15 +6,20 @@ public class RotationUtility : MonoBehaviour
 	public enum AxisOfRotation { X, Y, Z }
 	public AxisOfRotation axisOfRotation;
 	public float degreesPerSecond;
+	private Transform m_transform;
+
+	void Awake() {
+		m_transform = GetComponent<Transform> ();
+	}
 
 	void Update ()
 	{
 		if (degreesPerSecond != 0) UpdateRotation(degreesPerSecond);
 	}
-
+		
 	private void UpdateRotation (float degreesPerSecond)
 	{
-		Vector3 rotation = transform.localRotation.eulerAngles;
+		Vector3 rotation = m_transform.localRotation.eulerAngles;
 		Vector3 direction = Vector3.zero;
 
 		switch (axisOfRotation)
@@ -32,6 +37,6 @@ public class RotationUtility : MonoBehaviour
 
 		rotation += direction * degreesPerSecond * Time.deltaTime;
 		
-		transform.localRotation = Quaternion.Euler(rotation);
+		m_transform.localRotation = Quaternion.Euler(rotation);
 	}
 }
