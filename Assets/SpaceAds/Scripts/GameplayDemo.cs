@@ -14,6 +14,7 @@ public class GameplayDemo : MonoBehaviour
 	public Animator animator;
 	public bool unlockAll;
 	public bool showInterstitialAds;
+	public static bool gotoNextLevel = false;
 
 	[System.Serializable]
 	public class Level
@@ -40,12 +41,13 @@ public class GameplayDemo : MonoBehaviour
 			UnlockAllLevels(unlockAll);
 		}
 		else RefreshLevelUnlockStates();
-
+		if (gotoNextLevel) {
+			gotoNextLevel = false;
+			AnimateToNextLevel ();
+		}
 	}
 
-	public void StartGameplay ()
-	{
-		LevelLoader.Instance.LoadLevel ("Gameplay");
+	public void AnimateToNextLevel() {
 		Debug.Log("Starting gameplay...");
 		if (animator != null)
 		{
@@ -58,6 +60,11 @@ public class GameplayDemo : MonoBehaviour
 			}
 		}
 		else Debug.LogWarning("Unable to start gameplay.");
+	}
+
+	public void StartGameplay ()
+	{
+		LevelLoader.Instance.LoadLevel ("Gameplay");
 	}
 
 	public void EndGameplay ()
