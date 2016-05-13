@@ -18,6 +18,8 @@ public class enemyGenerator : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		spawning = true;
+		enemiesAlive = 0;
 		for (int i = 0; i < enemyPool.Length; i++) {
 			Debug.Log ("Instantiating enemy");
 			enemyPool [i] = Instantiate (enemy, Vector3.left * 200f, Quaternion.identity) as GameObject;
@@ -25,6 +27,8 @@ public class enemyGenerator : MonoBehaviour {
 		}
 		if (PlayerPrefs.HasKey ("Wave")) {
 			setWave (PlayerPrefs.GetInt ("Wave"));
+		} else {
+			setWave (1);
 		}
 		StartCoroutine (spawnNewEnemies ());
 	}
@@ -43,7 +47,7 @@ public class enemyGenerator : MonoBehaviour {
 	IEnumerator spawnNewEnemies() {
 		yield return new WaitForSeconds (2f);
 		while (true) {
-			while (enemiesAlive > 0 || !spawning) {
+			while (enemiesAlive > wave || !spawning) {
 				yield return new WaitForSeconds (1f);
 			}
 			setWave (wave);

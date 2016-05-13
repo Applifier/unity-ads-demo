@@ -37,7 +37,7 @@ public class GameplayDemo : MonoBehaviour
 		UnlockLevel (1, false);
 
 		if (Debug.isDebugBuild)
-		{
+		{			
 			UnlockAllLevels(unlockAll);
 		}
 		else RefreshLevelUnlockStates();
